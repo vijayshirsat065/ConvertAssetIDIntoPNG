@@ -3,45 +3,45 @@
 
 #include "NumberConversion.h"
 
-void NumberConversion::GetAllDigitsOfTheNumberInReverseOrder(const unsigned int& number, std::vector<unsigned int>& DigitsInNumber)
-{
-	DigitsInNumber.clear(); // Empty the vector, so the elements can be added from starting position
-	AddAllDigitsOfTheNumberInReverseOrderToEndOfVector(number, DigitsInNumber);
-}
+#include <algorithm>
 
-void NumberConversion::AddAllDigitsOfTheNumberInReverseOrderToEndOfVector(const unsigned int& number, std::vector<unsigned int>& DigitsInNumber)
+void NumberConversion::getAllDigitsOfTheNumber(
+	const unsigned int& number, 
+	std::vector<unsigned int>& digitsInNumber)
 {
+	digitsInNumber.clear(); // Make sure DigitsInNumber doesn't contain any garbage values
+
 	unsigned int resultingDividend = number;
-
 	while (resultingDividend != 0)
 	{
 		// Store the digits of the number in the vector in a reverse order
-		DigitsInNumber.push_back(resultingDividend % 10); // Get the last digit from the number and add it to the end of the vector
+		digitsInNumber.push_back(resultingDividend % 10);
 		resultingDividend /= 10; // Reduce the digits in the number one by one
 	}
+
+	// Correct the order of the elements in the vector by reversing it
+	std::reverse(digitsInNumber.begin(), digitsInNumber.end());
 }
 
-void NumberConversion::ReplaceElementsOfVectorWithReversedDigitsOfNumber(const unsigned int& number, std::vector<unsigned int>& DigitsInNumber)
+void NumberConversion::getAllDigitsOfTheNumber(
+	const unsigned int& number,
+	const unsigned int& minimumNumberOfDigits,
+	std::vector<unsigned int>& digitsInNumber)
 {
-	unsigned int resultingDividend = number;
-	unsigned int count = 0;
-	while (resultingDividend != 0)
+	// Get the digits
+	getAllDigitsOfTheNumber(number, digitsInNumber);
+	
+	// Check if the minimum number of digits are present
+	if (digitsInNumber.size() < minimumNumberOfDigits)
 	{
-		// Store the digits of the number in the vector in a reverse order
+		// Get the number of missing digits
+		unsigned int count = static_cast<unsigned int>(minimumNumberOfDigits - digitsInNumber.size()); 
 
-		// Check if the vector already has some elements
-		if (count < DigitsInNumber.size())
+		// Backfill the missing digits with zeroes
+		while (count > 0)
 		{
-			// Replace existing elements. This is helpful if the vector is prepopulated with placeholder elements.
-			DigitsInNumber[count] = (resultingDividend % 10);
+			digitsInNumber.insert(digitsInNumber.begin(), 0u);
+			--count;
 		}
-		else
-		{
-			// Add new elements
-			DigitsInNumber.push_back(resultingDividend % 10);
-		}
-		
-		resultingDividend /= 10; // Reduce the digits in the number one by one
-		++count;
 	}
 }

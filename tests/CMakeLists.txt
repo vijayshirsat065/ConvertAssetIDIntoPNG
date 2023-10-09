@@ -6,4 +6,4 @@ function(SetupAndAddSingleTestFile TestExecutableName TestSourceFile)
 endfunction()
 
 SetupAndAddSingleTestFile(NumberConversionTest NumberConversionTest.cpp)
-
+SetupAndAddSingleTestFile(TwoDigitChecksumGeneratorTest TwoDigitChecksumGeneratorTest.cpp)

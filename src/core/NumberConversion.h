@@ -6,7 +6,8 @@
 
 namespace NumberConversion
 {
-	void GetAllDigitsOfTheNumberInReverseOrder(const unsigned int& assetID, std::vector<unsigned int>& DigitsInNumber);
-	void AddAllDigitsOfTheNumberInReverseOrderToEndOfVector(const unsigned int& assetID, std::vector<unsigned int>& DigitsInNumber);
-	void ReplaceElementsOfVectorWithReversedDigitsOfNumber(const unsigned int& assetID, std::vector<unsigned int>& DigitsInNumber);
+	void getAllDigitsOfTheNumber(const unsigned int& number, std::vector<unsigned int>& DigitsInNumber);
+	void getAllDigitsOfTheNumber(const unsigned int& number, 
+		const unsigned int& minimumNumberOfDigits, 
+		std::vector<unsigned int>& DigitsInNumber);
 }

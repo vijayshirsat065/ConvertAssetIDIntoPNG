@@ -7,31 +7,48 @@
 #include <numeric>
 #include <cmath>
 
+CTwoDigitChecksumGenerator::CTwoDigitChecksumGenerator(const unsigned int& checksumBase)
+{
+	// To prevent from using an invalid number
+	setChecksumBase(checksumBase);
+}
+
 CTwoDigitChecksumGenerator::~CTwoDigitChecksumGenerator() {}
 
 void CTwoDigitChecksumGenerator::setChecksumBase(const unsigned int& checksumBase)
 {
-	//Ensure the checksum base is not greater than the allowed max digit number
-	m_ChecksumBase = ((checksumBase > m_MAX_TWO_DIGIT_NUMBER) ? m_MAX_TWO_DIGIT_NUMBER : checksumBase);
+	//Ensure the checksum base is not greater than the allowed max digit number and is not less than 1
+	m_ChecksumBase = (checksumBase > 1 ? ((checksumBase > m_MAX_TWO_DIGIT_NUMBER) ? m_MAX_TWO_DIGIT_NUMBER : checksumBase) : 1);
 }
 
 const unsigned int& CTwoDigitChecksumGenerator::getChecksumBase() const
 {
 	return m_ChecksumBase;
 }
-
-void CTwoDigitChecksumGenerator::generateChecksum(const std::vector<unsigned int>& reversedAssetIDDigits, unsigned int& checksum) const
+	
+void CTwoDigitChecksumGenerator::generateChecksumForNumber(const unsigned int& number, const unsigned int& minimumNumberOfDigits, unsigned int& checksum) const
 {
-	if (reversedAssetIDDigits.size() > 0)
+	std::vector<unsigned int> digitsOfNumber;
+	NumberConversion::getAllDigitsOfTheNumber(number, minimumNumberOfDigits, digitsOfNumber);
+
+	generateChecksumForDigitsOfNumber(digitsOfNumber, checksum);
+}
+
+void CTwoDigitChecksumGenerator::generateChecksumForDigitsOfNumber(const std::vector<unsigned int>& digitsOfNumber, unsigned int& checksum) const
+{
+	if (digitsOfNumber.size() > 0)
 	{
 		// Generate checksum
-		// Formula for generating checsum: c = (a1 + (10 * a2) + (100 * a3) + (1000 * a4)) mod 97
-		// Here 'c' is the checksum, {a1, a2, a3, a4} are the digits of the number and 97 is the checksum base
-		// In this formula, the original number or asset ID is getting reversed and then a modulus of 97 is getting calculated
-		checksum = reversedAssetIDDigits.front();
-		for (int i = 1; i < reversedAssetIDDigits.size(); ++i)
+		// Formula for generating checksum: c = (a1 + (10 * a2) + (100 * a3) + (1000 * a4)) mod cb
+		// Here 'c' is the checksum, {a1, a2, a3, a4} are the digits of the number and cb is the checksum base
+		// In this formula, the original number or asset ID is getting reversed and then a modulus of cb is getting calculated
+		// For example, the checksum for the asset ID 1337 can be calculated as follows:
+		// (1 + (10 * 3) + (100 * 3) + (1000 * 7)) mod 97 = 7331 mod 97 = 56
+
+		checksum = digitsOfNumber.front();
+		for (int i = 1; i < digitsOfNumber.size(); ++i)
 		{
-			checksum += (reversedAssetIDDigits[i] * (static_cast<unsigned int>(std::pow(10, i))));
+			checksum += (digitsOfNumber[i] * (static_cast<unsigned int>(std::pow(10, i))));
 		}
 		checksum %= m_ChecksumBase;
 	}
@@ -41,18 +58,32 @@ void CTwoDigitChecksumGenerator::generateChecksum(const std::vector<unsigned int
 	}
 }
 
-void CTwoDigitChecksumGenerator::getChecksummedCodeInReverseOrder(const std::vector<unsigned int>& reversedAssetIDDigits, std::vector<unsigned int>& reversedChecksummedAssetIDDigits) const
+void CTwoDigitChecksumGenerator::generateChecksumAndGetDigitsOfTheChecksummedCode(
+	const unsigned int& number, 
+	const unsigned int& minimumNumberOfDigitsInNumber,
+	const unsigned int& minimumNumberOfDigitsInChecksum,
+	std::vector<unsigned int>& digitsOfChecksummedCode) const
 {
-	//This function expects the assetID in reversed order, so the output checksummedAssetIDDigits variable also has the digits of the result in reverse order
-	//For example, if the assetID is 1234, then the reversedAssetIDDigits contains [4, 3, 2, 1]
+	// Get the individual digits of the number and store them in a vector
+	std::vector<unsigned int> digitsOfNumber;
+	NumberConversion::getAllDigitsOfTheNumber(number, minimumNumberOfDigitsInNumber, digitsOfNumber);
 
-	//Generate the checksum
+	generateChecksumAndGetDigitsOfTheChecksummedCode(digitsOfNumber, minimumNumberOfDigitsInChecksum, digitsOfChecksummedCode);
+}
+
+void CTwoDigitChecksumGenerator::generateChecksumAndGetDigitsOfTheChecksummedCode(
+	const std::vector<unsigned int>& digitsOfNumber, 
+	const unsigned int& minimumNumberOfDigitsInChecksum,
+	std::vector<unsigned int>& digitsOfChecksummedCode) const
+{
+	// Generate the checksum
 	unsigned int checksum = 0;
-	generateChecksum(reversedAssetIDDigits, checksum);
+	generateChecksumForDigitsOfNumber(digitsOfNumber, checksum);
 
-	//Copy the assetID digits into the checksummed vector
-	reversedChecksummedAssetIDDigits = reversedAssetIDDigits;
+	// Get the individual digits of the checksum and add them in the output variable
+	NumberConversion::getAllDigitsOfTheNumber(checksum, minimumNumberOfDigitsInChecksum, digitsOfChecksummedCode);
 
-	//Add the digits from checksum into the output variable
-	NumberConversion::AddAllDigitsOfTheNumberInReverseOrderToEndOfVector(checksum, reversedChecksummedAssetIDDigits);
+	// At this point our output variable contains the digits of the checksum
+	// All thats left to do, is to add the digits of the original number
+	digitsOfChecksummedCode.insert(digitsOfChecksummedCode.end(), digitsOfNumber.begin(), digitsOfNumber.end());
 }
