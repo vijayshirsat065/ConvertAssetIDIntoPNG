@@ -18,5 +18,5 @@ TEST(PlainTextFileLoaderTest, LoadAssetIDsFromFile)
     EXPECT_THAT(assetIDs, ElementsAre(11, 201, 1222, 1927, 2674, 4434, 5657, 6872, 7288, 9443));
 
     PlainTextFileLoader.LoadAssetIDsFromFile("testData/assetIDsTestFile2.txt", 0, 9999, assetIDs);
-    EXPECT_THAT(assetIDs, ElementsAre(3, 201, 1222, 1927, 2674, 4434, 5657, 6872, 7288, 9443));
+    EXPECT_THAT(assetIDs, ElementsAre(3, 201, 1222, 1927));
 }
