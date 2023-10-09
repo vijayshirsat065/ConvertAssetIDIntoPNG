@@ -1,7 +1,9 @@
-﻿// NumberConversiontest.cpp : 
+﻿// PlainTextFileLoaderTest.cpp : 
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
+
+#include <filesystem>
 
 #include "PlainTextFileLoader.h"
 
@@ -9,25 +11,12 @@ using namespace testing;
 
 TEST(PlainTextFileLoaderTest, LoadAssetIDsFromFile)
 {
-	unsigned int number = 1256;
-	std::vector<unsigned int> digitsOfNumber;
+    std::vector<unsigned int> assetIDs;
 
-	NumberConversion::getAllDigitsOfTheNumber(number, digitsOfNumber);
-	EXPECT_THAT(digitsOfNumber, ElementsAre(1, 2, 5, 6));
+    CPlainTextFileLoader PlainTextFileLoader;
+    PlainTextFileLoader.LoadAssetIDsFromFile("testData/assetIDsTestFile.txt", 0, 9999, assetIDs);
+    EXPECT_THAT(assetIDs, ElementsAre(11, 201, 1222, 1927, 2674, 4434, 5657, 6872, 7288, 9443));
 
-	number = 324;
-	NumberConversion::getAllDigitsOfTheNumber(number, digitsOfNumber);
-	EXPECT_THAT(digitsOfNumber, ElementsAre(3, 2, 4));
-
-	number = 41;
-	NumberConversion::getAllDigitsOfTheNumber(number, digitsOfNumber);
-	EXPECT_THAT(digitsOfNumber, ElementsAre(4, 1));
-
-	number = 372849;
-	NumberConversion::getAllDigitsOfTheNumber(number, digitsOfNumber);
-	EXPECT_THAT(digitsOfNumber, ElementsAre(3, 7, 2, 8, 4, 9));
-
-	number = 3;
-	NumberConversion::getAllDigitsOfTheNumber(number, digitsOfNumber);
-	EXPECT_THAT(digitsOfNumber, ElementsAre(3));
+    PlainTextFileLoader.LoadAssetIDsFromFile("testData/assetIDsTestFile2.txt", 0, 9999, assetIDs);
+    EXPECT_THAT(assetIDs, ElementsAre(3, 201, 1222, 1927, 2674, 4434, 5657, 6872, 7288, 9443));
 }

@@ -6,6 +6,7 @@
 #include "core/FileReader.h"
 
 #include <iostream>
+#include <filesystem>
 
 CPlainTextFileLoader::CPlainTextFileLoader()
 {
@@ -19,25 +20,34 @@ void CPlainTextFileLoader::LoadAssetIDsFromFile(
     const unsigned int& maxNumber,
     std::vector<unsigned int>& assetIDs) const
 {
-	CFileReader FileReader(filePath);
+    if (std::filesystem::exists(filePath))
+    {
+        assetIDs.clear();
 
-    std::string text;
-    auto assetID = 0;
-    while (std::getline(FileReader.GetFileStreamInstance(), text)) 
-    { 
-        //read data from file object and put it into string
+        CFileReader FileReader(filePath);
+
+        std::string text;
+        auto assetID = 0;
         try
         {
-            //convert string to number
-            assetID = std::stoi(text);
-            if ((static_cast<int>(minNumber) <= assetID) && (static_cast<int>(maxNumber) >= assetID))
+            while (std::getline(FileReader.GetFileStreamInstance(), text))
             {
-                assetIDs.push_back(assetID);
+                //read data from file object and put it into string
+                //convert string to number
+                assetID = std::stoi(text);
+                if ((static_cast<int>(minNumber) <= assetID) && (static_cast<int>(maxNumber) >= assetID))
+                {
+                    assetIDs.push_back(assetID);
+                }
             }
         }
         catch (std::invalid_argument const& ex)
         {
             std::cout << "std::invalid_argument::what(): " << ex.what() << '\n';
         }
+    }
+    else
+    {
+        std::cout << "File doesn't exist : " << filePath << std::endl;
     }
 }
