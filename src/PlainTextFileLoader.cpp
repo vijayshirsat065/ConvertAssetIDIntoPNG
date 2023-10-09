@@ -14,7 +14,7 @@ CPlainTextFileLoader::CPlainTextFileLoader()
 
 CPlainTextFileLoader::~CPlainTextFileLoader() {}
 
-void CPlainTextFileLoader::LoadAssetIDsFromFile(
+void CPlainTextFileLoader::loadAssetIDsFromFile(
     const std::string& filePath,
     const unsigned int& minNumber,
     const unsigned int& maxNumber,

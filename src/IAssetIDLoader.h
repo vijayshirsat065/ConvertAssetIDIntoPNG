@@ -8,7 +8,7 @@ class IAssetIDLoader
 public:
 	virtual ~IAssetIDLoader() {}
 
-	virtual void LoadAssetIDsFromFile(
+	virtual void loadAssetIDsFromFile(
 		const std::string& filePath,
 		const unsigned int& minNumber,
 		const unsigned int& maxNumber,
