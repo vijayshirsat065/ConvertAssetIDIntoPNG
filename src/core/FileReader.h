@@ -9,7 +9,7 @@ public:
 	CFileReader(const std::string& filePath);
 	~CFileReader();
 
-	std::ifstream& GetFileStreamInstance();
+	std::ifstream& getFileStreamInstance();
 
 private:
 	std::ifstream m_FileReader;

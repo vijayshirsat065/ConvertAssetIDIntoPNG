@@ -18,7 +18,7 @@ CFileReader::~CFileReader()
 	}
 }
 
-std::ifstream& CFileReader::GetFileStreamInstance()
+std::ifstream& CFileReader::getFileStreamInstance()
 {
 	return m_FileReader;
 }

@@ -8,9 +8,9 @@ class IAssetIDLoader
 public:
 	virtual ~IAssetIDLoader() {}
 
-	virtual void loadAssetIDsFromFile(
+	virtual const unsigned int& GetNumberOfDigitsInAssetID() const = 0;
+
+	virtual bool loadAssetIDsFromFile(
 		const std::string& filePath,
-		const unsigned int& minNumber,
-		const unsigned int& maxNumber,
-		std::vector<unsigned int>& assetIDs) const = 0;
+		std::vector< std::vector<char> >& assetIDs) const = 0;
 };

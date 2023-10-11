@@ -5,8 +5,9 @@ function(SetupAndAddSingleTestFile TestExecutableName TestSourceFile)
   target_link_libraries(${TestExecutableName} ${CMAKE_PROJECT_NAME}_lib gtest gmock GTest::gtest_main)
 endfunction()
 
-SetupAndAddSingleTestFile(NumberConversionTest NumberConversionTest.cpp)
-SetupAndAddSingleTestFile(TwoDigitChecksumGeneratorTest TwoDigitChecksumGeneratorTest.cpp)
-SetupAndAddSingleTestFile(PlainTextFileLoaderTest PlainTextFileLoaderTest.cpp)
+SetupAndAddSingleTestFile(ConfigFileReaderTest ConfigFileReaderTest.cpp)
+SetupAndAddSingleTestFile(AssetIDDecimalCharToNumberMapperTest AssetIDDecimalCharToNumberMapperTest.cpp)
+SetupAndAddSingleTestFile(FourDigitAssetIDLoaderTest FourDigitAssetIDLoaderTest.cpp)
+SetupAndAddSingleTestFile(TwoDigitChecksumGeneratorFromFourDigitAssetIDTest TwoDigitChecksumGeneratorFromFourDigitAssetIDTest.cpp)
 
 INSTALL(DIRECTORY "testData" DESTINATION "${PROJECT_BINARY_DIR}/tests")
