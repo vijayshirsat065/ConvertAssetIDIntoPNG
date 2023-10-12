@@ -1,20 +1,28 @@
 ﻿
-SET(INTERFACE_FILES	"IAssetIDLoader.h"
-					"IAssetIDCharToNumberMapper.h"
-					"IChecksumGenerator.h"
-					)
+SET(INTERFACE_FILES		"IAssetIDCharToNumberMapper.h"
+						"IAssetIDLoader.h"
+						"ICharToBitArrayMapper.h"
+						"IChecksumGenerator.h"
+						"IImageFileCreator.h"
+						)
 
-SET(SOURCE_FILES	"core/FileReader.h"
-					"core/FileReader.cpp"
-					"core/ConfigFileReader.h"
-					"core/ConfigFileReader.cpp"
-					"FourDigitAssetIDLoader.h"
-					"FourDigitAssetIDLoader.cpp"
-					"AssetIDDecimalCharToNumberMapper.h"
-					"AssetIDDecimalCharToNumberMapper.cpp"
-					"TwoDigitChecksumGeneratorFromFourDigitAssetID.h" 
-					"TwoDigitChecksumGeneratorFromFourDigitAssetID.cpp"
-					)
+SET(SOURCE_FILES		"core/ConfigFileReader.h"
+						"core/ConfigFileReader.cpp"
+						"core/FileReader.h"
+						"core/FileReader.cpp"
+						"AssetIDDecimalCharToNumberMapper.h"
+						"AssetIDDecimalCharToNumberMapper.cpp"
+						"CharToSevenSegmentBitArrayMapper.h"
+						"CharToSevenSegmentBitArrayMapper.cpp"
+						"ConvertAssetIDIntoPNG.h"
+						"ConvertAssetIDIntoPNG.cpp"
+						"FourDigitAssetIDLoader.h"
+						"FourDigitAssetIDLoader.cpp"
+						"OneBitPNGImageFileGenerator.h"
+						"OneBitPNGImageFileGenerator.cpp"
+						"TwoDigitChecksumGeneratorFromFourDigitAssetID.h" 
+						"TwoDigitChecksumGeneratorFromFourDigitAssetID.cpp"
+						)
 
 # Add source to this project's executable.
 add_library(${CMAKE_PROJECT_NAME}_lib STATIC ${INTERFACE_FILES} ${SOURCE_FILES})
