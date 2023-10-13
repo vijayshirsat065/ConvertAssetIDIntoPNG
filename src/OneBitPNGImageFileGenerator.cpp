@@ -20,7 +20,7 @@ bool COneBitPNGImageFileGenerator::generateAndSaveImageFileToOutputDirectory(
 	const std::string& outputImageFileName,
 	const std::string& outputDirectory) const
 {
-	bool bReturnValue = false;
+	bool bReturnValue = true;
 	
 	std::vector<unsigned char> imageBitArray(IMAGE_WIDTH, IMAGE_BITS_DEFAULT_CHAR);
 	std::vector<unsigned char> testVector(IMAGE_WIDTH, IMAGE_BITS_DEFAULT_CHAR);
@@ -37,15 +37,18 @@ bool COneBitPNGImageFileGenerator::generateAndSaveImageFileToOutputDirectory(
 			std::filesystem::create_directory(outputDirectory);
 		}
 
-		if (0u == lodepng_encode_file(
+		unsigned error = lodepng_encode_file(
 			imageFilePath.c_str(),
 			imageBitArray.data(),
 			IMAGE_WIDTH,
 			IMAGE_HEIGHT,
 			LodePNGColorType::LCT_GREY,
-			BIT_DEPTH))
+			BIT_DEPTH);
+
+		if (error)
 		{
-			bReturnValue = true;
+			std::cout << "image (" << imageFilePath.c_str() << ") encoding error " << error << ": " << lodepng_error_text(error) << std::endl;
+			bReturnValue = false;
 		}
 	}
 
