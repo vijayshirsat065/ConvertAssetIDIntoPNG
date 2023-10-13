@@ -9,7 +9,7 @@
 
 namespace
 {
-    const auto FOUR_DIGITS = 4u;
+    constexpr auto FOUR_DIGITS = 4u;
 }
 
 CFourDigitAssetIDLoader::CFourDigitAssetIDLoader()

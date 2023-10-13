@@ -1,15 +1,17 @@
 #pragma once
 
+#include "IImageFileCreator.h"
+
 #include <vector>
 #include <string>
 
-class COneBitPNGImageFileGenerator
+class COneBitPNGImageFileGenerator : public IImageFileCreator
 {
 public:
 	virtual ~COneBitPNGImageFileGenerator() {}
 
 	virtual bool generateAndSaveImageFileToOutputDirectory(
-		const std::vector<unsigned char> bitArrayOfChecksummedCode,
+		const std::vector<unsigned char>& bitArrayOfChecksummedCode,
 		const std::string& outputImageFileName,
-		const std::string& outputDirectory) const;
+		const std::string& outputDirectory) const;	
 };

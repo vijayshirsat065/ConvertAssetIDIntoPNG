@@ -27,8 +27,16 @@ FetchContent_MakeAvailable(googletest)
 # Needed by the CTest
 enable_testing()
 
+find_package(Git REQUIRED)
+
+set(EXTERNAL_DEPENDENCIES_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/dependencies")
+
+# Download and load LodePNG package
+execute_process(COMMAND ${GIT_EXECUTABLE} clone https://github.com/lvandeve/lodepng.git "${EXTERNAL_DEPENDENCIES_FOLDER}/lodepng/")
+
 # To resolve paths while including headers
 include_directories(src)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 # Including src and tests directories
 add_subdirectory(src)

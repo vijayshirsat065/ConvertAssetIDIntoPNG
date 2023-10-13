@@ -8,10 +8,12 @@
 CConvertAssetIDIntoPNG::CConvertAssetIDIntoPNG(
 	const IAssetIDLoader& assetIDLoader, 
 	const IChecksumGenerator& checksumGenerator,
-	const ICharToBitArrayMapper& charToBitArrayMapper)
-	: m_AssetIDLoader(assetIDLoader),
-	  m_ChecksumGenerator(checksumGenerator),
-	 m_CharToBitArrayMapper(charToBitArrayMapper)
+	const ICharToBitArrayMapper& charToBitArrayMapper,
+	const IImageFileCreator& imageFileCreator) :
+	m_AssetIDLoader(assetIDLoader),
+	m_ChecksumGenerator(checksumGenerator),
+	m_CharToBitArrayMapper(charToBitArrayMapper),	
+	m_ImageFileCreator(imageFileCreator)
 {}
 
 CConvertAssetIDIntoPNG::~CConvertAssetIDIntoPNG() {}

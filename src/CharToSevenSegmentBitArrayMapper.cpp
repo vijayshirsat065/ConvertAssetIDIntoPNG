@@ -5,8 +5,8 @@
 
 namespace 
 {
-	const std::string CONFIG_FILE = "SevenSegmentDisplayCharacterToBitArrayMapping.txt";
-	const auto NUMBER_OF_BITS_IN_7_SEGMENT_DU = 8u;
+	constexpr auto CONFIG_FILE = "SevenSegmentDisplayCharacterToBitArrayMapping.txt";
+	constexpr auto NUMBER_OF_BITS_IN_7_SEGMENT_DU = 8u;
 }
 
 CCharToSevenSegmentBitArrayMapper::CCharToSevenSegmentBitArrayMapper(const std::string& mappingFile)

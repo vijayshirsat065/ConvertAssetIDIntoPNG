@@ -22,6 +22,8 @@ SET(SOURCE_FILES		"core/ConfigFileReader.h"
 						"OneBitPNGImageFileGenerator.cpp"
 						"TwoDigitChecksumGeneratorFromFourDigitAssetID.h" 
 						"TwoDigitChecksumGeneratorFromFourDigitAssetID.cpp"
+						"${EXTERNAL_DEPENDENCIES_FOLDER}/lodepng/lodepng.h"
+						"${EXTERNAL_DEPENDENCIES_FOLDER}/lodepng/lodepng.cpp"
 						)
 
 # Add source to this project's executable.

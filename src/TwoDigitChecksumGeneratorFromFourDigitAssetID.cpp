@@ -9,9 +9,9 @@
 
 namespace
 {
-	const auto MAX_TWO_DIGIT_NUMBER = 99u;
-	const auto NUMBER_OF_DIGITS_IN_CHECKSUM = 2u;
-	const auto NUMBER_OF_DIGITS_IN_ASSET_ID = 4u;
+	constexpr auto MAX_TWO_DIGIT_NUMBER = 99u;
+	constexpr auto NUMBER_OF_DIGITS_IN_CHECKSUM = 2u;
+	constexpr auto NUMBER_OF_DIGITS_IN_ASSET_ID = 4u;
 }
 
 CTwoDigitChecksumGeneratorFromFourDigitAssetID::CTwoDigitChecksumGeneratorFromFourDigitAssetID(

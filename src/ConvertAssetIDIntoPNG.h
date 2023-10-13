@@ -3,6 +3,7 @@
 #include "IAssetIDLoader.h"
 #include "IChecksumGenerator.h"
 #include "ICharToBitArrayMapper.h"
+#include "IImageFileCreator.h"
 
 #include <memory>
 
@@ -12,7 +13,8 @@ public:
 	CConvertAssetIDIntoPNG(
 		const IAssetIDLoader& assetIDLoader, 
 		const IChecksumGenerator& checksumGenerator,
-		const ICharToBitArrayMapper& charToBitArrayMapper);
+		const ICharToBitArrayMapper& charToBitArrayMapper,
+		const IImageFileCreator& imageFileCreator);
 	~CConvertAssetIDIntoPNG();
 
 	bool loadAssetIDsAndGenerateChecksummedCodes(const std::string& assetIDInfoFile);
@@ -26,4 +28,5 @@ private:
 	const IAssetIDLoader& m_AssetIDLoader;
 	const IChecksumGenerator& m_ChecksumGenerator;
 	const ICharToBitArrayMapper& m_CharToBitArrayMapper;
+	const IImageFileCreator& m_ImageFileCreator;
 };
