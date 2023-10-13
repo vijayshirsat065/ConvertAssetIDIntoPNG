@@ -20,7 +20,7 @@ CConvertAssetIDIntoPNG::~CConvertAssetIDIntoPNG() {}
 
 bool CConvertAssetIDIntoPNG::loadAssetIDsAndGenerateChecksummedCodes(const std::string& assetIDInfoFile)
 {
-	bool bReturnValue = false;
+	bool bReturnValue = true;
 	if (m_AssetIDLoader.loadAssetIDsFromFile(assetIDInfoFile, m_AssetIDs) && !m_AssetIDs.empty())
 	{
 		m_ChecksummedAssetIDs.clear();
@@ -28,9 +28,8 @@ bool CConvertAssetIDIntoPNG::loadAssetIDsAndGenerateChecksummedCodes(const std::
 		for (auto& assetID : m_AssetIDs)
 		{
 			std::vector<char> checksummedAssetIDCode;
-			m_ChecksumGenerator.generateChecksumAndGetDigitsOfTheChecksummedCode(assetID, checksummedAssetIDCode);
+			bReturnValue = m_ChecksumGenerator.generateChecksumAndGetDigitsOfTheChecksummedCode(assetID, checksummedAssetIDCode) && bReturnValue;
 			m_ChecksummedAssetIDs.push_back(checksummedAssetIDCode);
-			bReturnValue = true;
 		}
 	}
 	return bReturnValue;
@@ -57,7 +56,8 @@ bool CConvertAssetIDIntoPNG::generateBitArrayOfChecksummedAssetIDs()
 				}
 				else
 				{
-					std::cout << "Failed to generate bit array for checksummed code - " << checksummedAssetID.data() << std::endl;
+					const std::string checksummedAssetIDText(checksummedAssetID.data(), checksummedAssetID.size());
+					std::cout << "Failed to generate bit array for checksummed code - " << checksummedAssetIDText << std::endl;
 					bReturnValue = false;
 					break;
 				}
@@ -70,6 +70,37 @@ bool CConvertAssetIDIntoPNG::generateBitArrayOfChecksummedAssetIDs()
 
 		bReturnValue = !m_BitArraysOfChecksummedAssetIDs.empty();
 	}
+
+	return bReturnValue;
+}
+
+bool CConvertAssetIDIntoPNG::generateImagesForChecksummedAssetIDs(const std::string& outputDirectory) const
+{
+	bool bReturnValue = true;
+
+	for (auto i = 0u; (i < m_BitArraysOfChecksummedAssetIDs.size() && i < m_AssetIDs.size()); ++i)
+	{
+		std::string filename;
+		filename.insert(filename.begin(), m_AssetIDs[i].begin(), m_AssetIDs[i].end());
+
+		if (!m_ImageFileCreator.generateAndSaveImageFileToOutputDirectory(
+			m_BitArraysOfChecksummedAssetIDs[i], filename, outputDirectory))
+		{
+			bReturnValue = false;
+			std::cout << "Failed to generate image for asset ID - " << filename << std::endl;
+		}
+	}
+
+	return bReturnValue;
+}
+
+bool CConvertAssetIDIntoPNG::generateImagesForLoadedAssetIDs(const std::string& assetIDInfoFile, const std::string& outputDirectory)
+{
+	auto bReturnValue = true;
+
+	bReturnValue = loadAssetIDsAndGenerateChecksummedCodes(assetIDInfoFile) && bReturnValue;
+	bReturnValue = generateBitArrayOfChecksummedAssetIDs() && bReturnValue;
+	bReturnValue = generateImagesForChecksummedAssetIDs(outputDirectory);
 
 	return bReturnValue;
 }

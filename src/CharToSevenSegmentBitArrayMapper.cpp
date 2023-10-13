@@ -2,6 +2,7 @@
 #include "core/ConfigFileReader.h"
 
 #include <filesystem>
+#include <iostream>
 
 namespace 
 {
@@ -35,6 +36,11 @@ void CCharToSevenSegmentBitArrayMapper::populateCharToBitArrayMap(const std::str
 				m_CharToBitArrayMap[key.front()] = bitArray;
 			}
 		}
+	}
+
+	if(m_CharToBitArrayMap.empty())
+	{
+		std::cout << "Failed to populate char to bit array map from mapping file - " << mappingFile << std::endl;
 	}
 }
 

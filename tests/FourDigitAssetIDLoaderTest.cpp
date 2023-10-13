@@ -26,3 +26,4 @@ TEST(FourDigitAssetIDLoaderTest, LoadAssetIDsFromFile)
     EXPECT_THAT(assetIDs[8], ElementsAre( '7', '2', '8', '8' ));
     EXPECT_THAT(assetIDs[9], ElementsAre( '9', '4', '4', '3' ));
 }
+    

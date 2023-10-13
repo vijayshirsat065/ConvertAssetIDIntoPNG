@@ -18,7 +18,7 @@ TEST(ConvertAssetIDIntoPNGTest, loadAssetIDsAndGenerateChecksummedCodes)
 
 	const IAssetIDCharToNumberMapper& assetIDCharToNumberMapper = CAssetIDDecimalCharToNumberMapper();
 
-	const auto CHECKSUM_BASE = 68u;
+	const auto CHECKSUM_BASE = 97u;
 	const IChecksumGenerator& twoDigitChecksumGenerator = CTwoDigitChecksumGeneratorFromFourDigitAssetID(CHECKSUM_BASE, assetIDCharToNumberMapper);
 
 	const auto CONFIG_FILE = "testData/SevenSegmentDisplayCharacterToBitArrayMapping.txt";
@@ -27,5 +27,6 @@ TEST(ConvertAssetIDIntoPNGTest, loadAssetIDsAndGenerateChecksummedCodes)
 	const IImageFileCreator& imageFileCreator = COneBitPNGImageFileGenerator();
 
 	CConvertAssetIDIntoPNG convertAssetIDIntoPNG(assetIDLoader, twoDigitChecksumGenerator, charToBitArrayMapper, imageFileCreator);
-
+	
+	EXPECT_TRUE(convertAssetIDIntoPNG.generateImagesForLoadedAssetIDs("testData/assetIDsTestFile.txt", "testOutput"));
 }

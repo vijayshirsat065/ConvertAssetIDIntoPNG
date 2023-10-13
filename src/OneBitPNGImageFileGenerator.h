@@ -9,7 +9,9 @@ class COneBitPNGImageFileGenerator : public IImageFileCreator
 {
 public:
 	virtual ~COneBitPNGImageFileGenerator() {}
-
+	/**
+	 * 
+	 */
 	virtual bool generateAndSaveImageFileToOutputDirectory(
 		const std::vector<unsigned char>& bitArrayOfChecksummedCode,
 		const std::string& outputImageFileName,

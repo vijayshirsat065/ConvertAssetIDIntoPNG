@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <filesystem>
 
 namespace
 {
@@ -28,8 +29,16 @@ bool COneBitPNGImageFileGenerator::generateAndSaveImageFileToOutputDirectory(
 	if ((imageBitArray.size() > (ASSET_ID_INFO_START_POS_IN_IMAGE_ARRAY + bitArrayOfChecksummedCode.size())) &&
 		(imageBitArray.end() != std::copy(bitArrayOfChecksummedCode.begin(), bitArrayOfChecksummedCode.end(), imageBitArray.begin() + ASSET_ID_INFO_START_POS_IN_IMAGE_ARRAY)))
 	{
+		std::string imageFilePath = outputImageFileName + IMAGE_FILE_EXTENSION;
+
+		if (!outputDirectory.empty())
+		{
+			imageFilePath = (outputDirectory + "/" + outputImageFileName + IMAGE_FILE_EXTENSION);
+			std::filesystem::create_directory(outputDirectory);
+		}
+
 		if (0u == lodepng_encode_file(
-			outputImageFileName.c_str(),
+			imageFilePath.c_str(),
 			imageBitArray.data(),
 			IMAGE_WIDTH,
 			IMAGE_HEIGHT,

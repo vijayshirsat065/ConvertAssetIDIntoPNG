@@ -17,11 +17,13 @@ public:
 		const IImageFileCreator& imageFileCreator);
 	~CConvertAssetIDIntoPNG();
 
-	bool loadAssetIDsAndGenerateChecksummedCodes(const std::string& assetIDInfoFile);
-
-	bool generateBitArrayOfChecksummedAssetIDs();
+	bool generateImagesForLoadedAssetIDs(const std::string& assetIDInfoFile, const std::string& outputDirectory);
 
 private:
+	bool loadAssetIDsAndGenerateChecksummedCodes(const std::string& assetIDInfoFile);
+	bool generateBitArrayOfChecksummedAssetIDs();
+	bool generateImagesForChecksummedAssetIDs(const std::string& outputDirectory) const;
+
 	std::vector< std::vector<char> > m_AssetIDs;
 	std::vector< std::vector<char> > m_ChecksummedAssetIDs;
 	std::vector< std::vector<unsigned char> > m_BitArraysOfChecksummedAssetIDs;
