@@ -10,6 +10,8 @@ SET(SOURCE_FILES		"core/ConfigFileReader.h"
 						"core/ConfigFileReader.cpp"
 						"core/FileReader.h"
 						"core/FileReader.cpp"
+						"core/FileWriter.h"
+						"core/FileWriter.cpp"
 						"AssetIDDecimalCharToNumberMapper.h"
 						"AssetIDDecimalCharToNumberMapper.cpp"
 						"CharToSevenSegmentBitArrayMapper.h"
@@ -32,7 +34,7 @@ add_executable (${CMAKE_PROJECT_NAME} ${INTERFACE_FILES} ${SOURCE_FILES} "main.c
 
 set_property(TARGET ${CMAKE_PROJECT_NAME} PROPERTY CXX_STANDARD 20)
 
-set(DESTINATION_FOLDER "${PROJECT_BINARY_DIR}/src")
+set(DESTINATION_FOLDER "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
 
 INSTALL(FILES "SevenSegmentDisplayCharacterToBitArrayMapping.txt" DESTINATION ${DESTINATION_FOLDER})
 INSTALL(FILES "test.txt" DESTINATION ${DESTINATION_FOLDER})

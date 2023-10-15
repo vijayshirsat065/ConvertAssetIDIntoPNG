@@ -17,6 +17,10 @@ public:
 		const IImageFileCreator& imageFileCreator);
 	~CConvertAssetIDIntoPNG();
 
+	const std::vector< std::vector<char> >& getAssetIDs() const;
+	const std::vector< std::vector<char> >& getChecksummedAssetIDs() const;
+	const std::vector< std::vector<unsigned char> >& getBitArraysOfChecksummedAssetIDs() const;
+
 	bool generateImagesForLoadedAssetIDs(const std::string& assetIDInfoFile, const std::string& outputDirectory);
 
 private:

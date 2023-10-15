@@ -18,6 +18,21 @@ CConvertAssetIDIntoPNG::CConvertAssetIDIntoPNG(
 
 CConvertAssetIDIntoPNG::~CConvertAssetIDIntoPNG() {}
 
+const std::vector< std::vector<char> >& CConvertAssetIDIntoPNG::getAssetIDs() const
+{
+	return m_AssetIDs;
+}
+
+const std::vector< std::vector<char> >& CConvertAssetIDIntoPNG::getChecksummedAssetIDs() const
+{
+	return m_ChecksummedAssetIDs;
+}
+
+const std::vector< std::vector<unsigned char> >& CConvertAssetIDIntoPNG::getBitArraysOfChecksummedAssetIDs() const
+{
+	return m_BitArraysOfChecksummedAssetIDs;
+}
+
 bool CConvertAssetIDIntoPNG::loadAssetIDsAndGenerateChecksummedCodes(const std::string& assetIDInfoFile)
 {
 	bool bReturnValue = true;
@@ -48,6 +63,8 @@ bool CConvertAssetIDIntoPNG::generateBitArrayOfChecksummedAssetIDs()
 		for (const auto& checksummedAssetID : m_ChecksummedAssetIDs)
 		{
 			bReturnValue = true;
+			bitArrayForIndividualCharacter.clear();
+			bitArrayForCompleteAssetID.clear();
 			for (const auto& character : checksummedAssetID)
 			{
 				if (m_CharToBitArrayMapper.getBitArrayForChar(character, bitArrayForIndividualCharacter))

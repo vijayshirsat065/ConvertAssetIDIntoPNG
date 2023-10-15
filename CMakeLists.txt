@@ -13,6 +13,10 @@ endif()
 
 project ("ConvertAssetIDIntoPNG")
 
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 # Download and load gtest package (https://google.github.io/googletest/quickstart-cmake.html)
 include(FetchContent)
 FetchContent_Declare(
@@ -31,8 +35,13 @@ find_package(Git REQUIRED)
 
 set(EXTERNAL_DEPENDENCIES_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/dependencies")
 
+set(LODEPNG_DIRECTORY_PATH "${EXTERNAL_DEPENDENCIES_FOLDER}/lodepng")
 # Download and load LodePNG package
-execute_process(COMMAND ${GIT_EXECUTABLE} clone https://github.com/lvandeve/lodepng.git "${EXTERNAL_DEPENDENCIES_FOLDER}/lodepng/")
+if(NOT EXISTS ${LODEPNG_DIRECTORY_PATH})
+	execute_process(COMMAND ${GIT_EXECUTABLE} clone https://github.com/lvandeve/lodepng.git "${LODEPNG_DIRECTORY_PATH}")
+else()
+	message(STATUS "lodepng dependency already present")
+endif()
 
 # To resolve paths while including headers
 include_directories(src)

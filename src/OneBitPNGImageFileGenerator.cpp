@@ -1,8 +1,10 @@
 #include "OneBitPNGImageFileGenerator.h"
 #include "dependencies/lodepng/lodepng.h"
+#include "core/FileWriter.h"
 
 #include <algorithm>
 #include <iostream>
+#include <fstream>
 #include <filesystem>
 
 namespace
@@ -37,6 +39,22 @@ bool COneBitPNGImageFileGenerator::generateAndSaveImageFileToOutputDirectory(
 			std::filesystem::create_directory(outputDirectory);
 		}
 
+		// Creating pbm file to check if the image data is correct
+		CFileWriter fileWriter((outputDirectory + "/" + outputImageFileName + ".pbm"));
+		auto& fileInstance = fileWriter.getFileStreamInstance();
+		
+		fileInstance << "P1" << std::endl;
+		fileInstance << IMAGE_WIDTH << " " << IMAGE_HEIGHT << std::endl;
+		for (auto& character : imageBitArray)
+		{
+			fileInstance << character << " ";
+		}
+		fileInstance << std::endl;
+		fileInstance.close();
+		// File closed
+
+		// Generating png file
+		imageBitArray.push_back('\0');
 		unsigned error = lodepng_encode_file(
 			imageFilePath.c_str(),
 			imageBitArray.data(),

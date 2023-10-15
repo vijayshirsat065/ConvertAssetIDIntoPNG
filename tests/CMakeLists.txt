@@ -12,4 +12,4 @@ SetupAndAddSingleTestFile(TwoDigitChecksumGeneratorFromFourDigitAssetIDTest TwoD
 SetupAndAddSingleTestFile(CharToSevenSegmentBitArrayMapperTest CharToSevenSegmentBitArrayMapperTest.cpp)
 SetupAndAddSingleTestFile(OneBitPNGImageFileGeneratorTest OneBitPNGImageFileGeneratorTest.cpp)
 SetupAndAddSingleTestFile(ConvertAssetIDIntoPNGTest ConvertAssetIDIntoPNGTest.cpp)
-INSTALL(DIRECTORY "testData" DESTINATION "${PROJECT_BINARY_DIR}/tests")
+INSTALL(DIRECTORY "testData" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
